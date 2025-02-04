@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using TeamFyraSidor.Data;
+@model IEnumerable<TeamFyraSidor.Models.ViewModels.ArticleCategoryLikedVM>;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager;
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<form asp-action="Search" asp-controller="Home" method="get" class="d-flex" role="search">
+    <input class="form-control me-2" name="searchString" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-dark" type="submit">Search</button>
+</form>
+
+<h2>Search Result</h2><br />
+
+    @foreach (var article in Model)
+    {
+        <a asp-action="DisplayArticle" asp-controller="Article" asp-route-id="@article.Article.Id">
+            <div class="row">
+                <div class="col-3">
+                <img src="@article.Article.ImageLink" class="card-img rounded-2" alt="@article.Article.Headline" width="260" height="180">
+                </div>
+                <div class="col-8 card">
+                    <div class="card-body">
+                    <h5 class="card-title">@article.Article.Headline</h5>
+                    <p class="card-text">@article.Article.ContentSummary</p>
+                    </div>
+                    <div class="card-footer">
+                    <span>@article.Article.DateStamp.ToShortDateString()</span> |
+                    <span>@article.Article.Category!.Name</span> |
+                    <span><i class="fa-regular fa-thumbs-up"></i>&nbsp;@article.Article.Likes</span> |
+                    <span><i class="fa-regular fa-eye"></i>&nbsp;@article.Article.Views</span>
+                    @if (article.Article.UpdateStamp > article.Article.DateStamp)
+                        {
+                        <span> | Updated: @article.Article.UpdateStamp</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </a>
+        <br />
+    }
+
+
+

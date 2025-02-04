@@ -1,0 +1,30 @@
+﻿@model TeamFyraSidor.Data.Article
+
+
+<div class="card mb-3" style="max-width: 100%; height= auto;">
+    <div class="row g-0">
+
+        <div class="col-md-4 d-flex flex-column">
+            <div class="card-body">
+                <h4 class="card-title">@Model.Headline</h4>
+                <p class="card-text">@Model.ContentSummary</p>
+                
+                <a asp-controller="Article" asp-action="DisplayArticle" asp-route-id="@Model.Id" class="btn btn-primary bg-black stretched-link">Read More</a>
+
+            </div>
+            <div class="card-footer bg-light border-0 d-flex justify-content-between">
+                <span>@Model.DateStamp.ToShortDateString()</span>
+                @* <span>@Model.Category.Name</span> *@
+                <div class="ml-auto text-success-emphasis">
+                    <span><i class="fa-solid fa-thumbs-up"></i>&nbsp;@Model.Likes</span> |
+                    <span><i class="fa-solid fa-eye"></i>&nbsp;@Model.Views</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-8">
+            <img src=@Model.ImageLink class="img-fluid w-100 h-100 rounded-start" alt=@Model.Headline>
+        </div>
+    </div>
+</div>
+

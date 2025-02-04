@@ -1,0 +1,22 @@
+﻿@model TeamFyraSidor.Models.WeatherViewModel
+
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">@ViewData["Error"]</div>
+}
+else
+{
+   
+        <div class="card-body">
+            <h3 class="card-header text-center m-3">Weather</h3>
+            <h4 class="card-title text-primary">@Model.Name <img src="@Model.Icon" alt="@Model.Description" class="weather-icon" /></h4>
+            <div class="card-text">
+                <p><strong>Temperature :</strong> @Model.Temp &deg;C</p>
+                <p><strong>Humidity :</strong> @Model.Humidity%</p>
+                <p><strong>Wind Speed :</strong> @Model.WindSpeed m/s</p>
+                <p><strong>Description :</strong> @Model.Description</p>
+            </div>
+        </div>
+  
+}

@@ -1,0 +1,104 @@
+﻿@using Newtonsoft.Json
+@model TeamFyraSidor.Models.VM.EditUserRoleVM
+
+@{
+    ViewData["Title"] = "EditEmployee";
+    var listAllRoleName = JsonConvert.DeserializeObject<List<string>>(TempData["ListAllRoleName"] as string);
+    var listRoleName = string.Empty;
+    if (Model.ListRoleName!=null)
+    {
+        listRoleName = string.Join(",", Model.ListRoleName);
+    } 
+}
+
+<h3>Edit User Role</h3>
+<div class="container-fluid">
+    <div class="row ">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group box-shadow">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" readonly  class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group box-shadow">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" readonly class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group box-shadow">
+            <label class="control-label">Role</label>
+            <input value="@listRoleName" readonly  class="form-control" />
+            <span asp-validation-for="ListRoleName" readonly class="text-danger"></span>
+        </div>
+
+        <form asp-action="EditUserRole">
+            <input type="hidden" name="actionType" value="AddRole" />
+            <div class="form-group box-shadow  visually-hidden">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" readonly class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="mb-2">Add role</label>
+                <select asp-for="RoleToDo" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option value="">Open this select menu</option>
+                    @foreach (var item in listAllRoleName)
+                    {
+                        if (!listRoleName.Contains(item))
+                        {
+                            <option value=@item>@item</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group box-shadow col-md-12 mt-md-2">
+                <input type="submit" value="Add Role" class="btn btn-primary w-100" />
+            </div>
+        </form>
+
+        <form asp-action="EditUserRole">
+            <input type="hidden" name="actionType" value="RemoveRole" />
+            <div class="form-group box-shadow  visually-hidden">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" readonly class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="mb-2">Remove role</label>
+                <select asp-for="RoleToDo" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option value="">Open this select menu</option>
+                    @foreach (var item in Model.ListRoleName)
+                    {
+                        <option value=@item>@item</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group box-shadow col-md-12 mt-md-2">
+                <input type="submit" value="Remove Role" class="btn btn-primary w-100" />
+            </div>
+        </form>
+        <div class="row">
+            <div class="form-group box-shadow col-md-6 mt-md-2">
+                <a asp-action="DetailUserRole" asp-route-email=@Model.Email class="btn btn-secondary w-100">Back to Detail</a>
+            </div>
+            @if (Model.ListRoleName != null && (Model.ListRoleName.Contains("Admin") || Model.ListRoleName.Contains("Editor")))
+            {
+                <div class="form-group box-shadow col-md-6 mt-md-2">
+                    <a asp-action="ListEmployeeRole" class="btn btn-secondary w-100">Back to List</a>
+                </div>
+            }
+            else
+            {
+                <div class="form-group box-shadow col-md-6 mt-md-2">
+                    <a asp-action="ListUserRole" class="btn btn-secondary w-100">Back to List</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@TempData["msg"]
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

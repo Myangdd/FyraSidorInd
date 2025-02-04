@@ -1,0 +1,21 @@
+﻿@model TeamFyraSidor.Models.StockViewModel
+
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">@ViewData["Error"]</div>
+}
+else
+{
+    <div class="card-header text-center bg-success text-white">
+        <h4>Stock Information</h4>
+    </div>
+    <div class="card-body">
+        <p class="card-text"><strong></strong> @Model.Symbol</p>
+        <p class="card-text"><strong>Open:</strong> @Model.Open</p>
+        <p class="card-text"><strong>High:</strong> @Model.High</p>
+       @*  <p class="card-text"><strong>Change:</strong> @Model.Change</p>
+        <p class="card-text"><strong>Change Percent:</strong> @Model.ChangePercent</p> *@
+    </div>
+    
+}

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TeamFyraSidor.Models.VM.CreateRoleVM>
+
+@{
+    ViewData["Title"] = "Role List";
+}
+<div class="m-3">
+    <h1 class="mt-4 mb-3">Role List</h1>
+    <hr />
+
+    <a class="btn btn-success" asp-action="CreateRole">Create a New Role</a>
+</div>
+
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <table class="table mb-5">
+                <thead>
+                    <tr>
+                        <th class="col-md-6">
+                            Name
+                        </th>
+                        <th class="col-md-6">
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                <a asp-action="EditRole" asp-route-roleName="@item.Name" class="btn btn-primary">Edit</a>
+                                <a asp-action="DeleteRole" asp-route-roleName="@item.Name" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using TeamFyraSidor.Data;
+@model TeamFyraSidor.Models.ViewModels.ArticleCategoryLikedVM;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager;
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    var user = await UserManager.GetUserAsync(User);
+    var userId = user?.Id;
+}
+
+
+<div class="container">
+    <div class="card">
+
+        <div class="card-body text-center">
+            <p class="card-text text-start">
+
+                <strong class="text-danger">Category : @Model.Article.Category.Name</strong><br /><br />
+                <small class="text-body-secondary fw-semibold">@Model.Article.DateStamp</small>
+
+            </p>
+
+            <h5 class="card-title">@Model.Article.Headline</h5>
+
+            <p>By <strong>@Model.Article.Author</strong> / FyraSidor</p>
+        
+        </div>
+        <img src="@Model.Article.ImageLink" class="card-img-bottom" alt="...">
+        <p class="text-center mt-2"><small>@Model.Article.ContentSummary</small></p>
+
+    </div>
+    <div>
+        <p class="lh-base text-start para mt-3">
+           @Html.Raw(Model.Article.Content)
+        </p>
+    </div>
+    <div>
+        <button type="submit" onclick="GetSummary(@Model.Article.Id),Spinner()" class="btn btn-outline-info">Get Summary <span id="summaryButton"></span></button>
+        <p id="summary" class="lh-base text-start para mt-3">
+            
+        </p>
+    </div>
+    <div class="card-footer text-success-emphasis" id="cardFooter">
+        @* <span>@Model.Article.DateStamp.ToShortDateString()</span> | *@
+        <span class="likesCount" id="1_@Model.Article.Id"><i class="fa-solid fa-thumbs-up"></i>&nbsp; @Model.Article.Likes</span> |
+        <span><i class="fa-solid fa-eye"></i>&nbsp; @Model.Article.Views</span>
+        <span class="float-end">
+            @{
+                if (user != null)
+                {
+                    if (Model.UserLikedArticles.Where(a => a.ArticleId == Model.Article.Id && a.UserId == userId).Select(x => x.UserId).FirstOrDefault() == userId)
+                    {
+                        <button class="btn btn-sm btn-outline-primary active" onclick="RemoveLikeFromArticle(@Model.Article.Id, '@userId')" id="@Model.Article.Id" title="You Liked This Article.">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+                            </svg>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-outline-primary" onclick="AddLikeToArticle(@Model.Article.Id, '@userId')" id="@Model.Article.Id" title="Click to Like this Article.">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+                            </svg>
+                        </button>
+                    }
+                }
+                else
+                {
+                    <button class="btn btn-sm btn-outline-warning active" id="@Model.Article.Id" title="Please Login To Like Articles">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+                        </svg>
+                    </button>
+                }
+            }
+        </span>
+    </div>
+</div>
+<div class="mt-5">
+
+</div>
+<script>
+    window.onpageshow = function () {
+        AddViewToArticle(@Model.Article.Id);
+    }
+</script>
+

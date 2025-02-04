@@ -1,0 +1,74 @@
+﻿@model TeamFyraSidor.Models.VM.EditUserAndRoleVM
+
+@{
+    ViewData["Title"] = "Detail User";
+}
+
+<h1>Detail of User and Role</h1>
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <table class="table table-secondary table-striped">
+                <tbody>
+                    <tr>
+                        <td class="col-md-3">Name</td>
+                        <td class="col-md-9">@Model.FirstName @Model.LastName</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-3">Email</td>
+                        <td class="col-md-9">@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-3">Phone Number</td>
+                        <td class="col-md-9">@Model.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-3">Date of Birth</td>
+                        <td class="col-md-9">@Model.DOB</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-3">Roll</td>
+                        @{
+                            var listRoleName = string.Empty;
+                            if (Model.ListRoleName != null) 
+                            {
+                                listRoleName = string.Join(",", Model.ListRoleName);
+                            } 
+                        }
+                        <td class="col-md-9">@listRoleName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group box-shadow col-md-3 mt-md-2">
+        <a asp-action="EditUserInfo" asp-route-id=@Model.UserId class="btn btn-primary w-100">Edit Info</a>
+    </div>
+    <div class="form-group box-shadow col-md-3 mt-md-2">
+        <a asp-action="EditUserRole" asp-route-id=@Model.UserId class="btn btn-primary w-100">Edit Role</a>
+    </div>
+
+
+        @if (Model.ListRoleName != null && (Model.ListRoleName.Contains("Admin") || Model.ListRoleName.Contains("Editor")))
+        {
+            <div class="form-group box-shadow col-md-6 mt-md-2">
+                <a asp-action="ListEmployeeRole" class="btn btn-secondary w-100">Back to List</a>
+            </div>
+        }
+        else
+        {
+            <div class="form-group box-shadow col-md-6 mt-md-2">
+                <a asp-action="ListUserRole" class="btn btn-secondary w-100">Back to List</a>
+            </div>
+        }
+</div>
+
+@Model.ErrorMsg
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

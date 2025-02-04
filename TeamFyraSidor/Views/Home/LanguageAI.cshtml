@@ -1,0 +1,30 @@
+﻿@using Azure.AI.TextAnalytics
+@model DocumentSentiment
+
+<h2>Sentiment Analysis</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+else if (ViewBag.Sentiment != null && ViewBag.ConfidenceScores != null)
+{
+    <div>
+        <p><strong>Sentiment:</strong> @ViewBag.Sentiment</p>
+        <p><strong>Confidence Scores:</strong></p>
+        <ul>
+            <li><strong>Positive:</strong> @ViewBag.ConfidenceScores.Positive</li>
+            <li><strong>Neutral:</strong> @ViewBag.ConfidenceScores.Neutral</li>
+            <li><strong>Negative:</strong> @ViewBag.ConfidenceScores.Negative</li>
+        </ul>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">No sentiment data available.</div>
+}
+
+<form method="post" action="@Url.Action("LanguageAI", "Home")">
+    <textarea name="text" rows="4" cols="50" placeholder="Enter text for sentiment analysis"></textarea>
+    <button type="submit">Analyze Sentiment</button>
+</form>

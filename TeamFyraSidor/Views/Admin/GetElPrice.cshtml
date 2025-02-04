@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TeamFyraSidor.Models.TableData.ElPriceEntity>
+
+
+    <div class="container mt-5">
+        <h1 class="mb-4">El Price History Table</h1>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Row Key</th>
+                    <th>Partition Key</th>
+                    <th>Price(öre/kWh)</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.RowKey</td>
+                            <td>@item.PartitionKey</td>
+                            <td>@item.Price</td>
+                            <td>@item.Timestamp?.ToString("g")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">No data available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+

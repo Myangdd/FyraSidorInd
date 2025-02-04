@@ -1,0 +1,98 @@
+﻿@model TeamFyraSidor.Data.Article
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4 class="text-center mt-4">Edit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DateStamp" hidden class="control-label"></label>
+                <input asp-for="DateStamp" hidden class="form-control" />
+                <span asp-validation-for="DateStamp" hidden class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LinkText" hidden class="control-label"></label>
+                <input asp-for="LinkText" hidden class="form-control" />
+                <span asp-validation-for="LinkText" hidden class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Headline" class="control-label"></label>
+                <input asp-for="Headline" class="form-control" />
+                <span asp-validation-for="Headline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContentSummary" class="control-label"></label>
+                <textarea asp-for="ContentSummary" class="form-control" ></textarea>
+                <span asp-validation-for="ContentSummary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" id="autoresizing" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Views" hidden class="control-label"></label>
+                <input asp-for="Views" hidden class="form-control" />
+                <span asp-validation-for="Views" hidden class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Likes" hidden class="control-label"></label>
+                <input asp-for="Likes" hidden class="form-control" />
+                <span asp-validation-for="Likes" hidden class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageLink" class="control-label"></label>
+                <input asp-for="ImageLink" class="form-control" />
+                <span asp-validation-for="ImageLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Category: </label>
+                <select asp-for="CategoryId" class="form-select form-select" asp-items="ViewBag.Categories">
+                    <option value="" selected>Please choose a category:</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsArchived" /> @Html.DisplayNameFor(model => model.IsArchived)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStamp" hidden class="control-label"></label>
+                <input asp-for="UpdateStamp" hidden class="form-control" />
+                <span asp-validation-for="UpdateStamp" hidden class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a class="btn btn-info" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    textarea = document.querySelector("#autoresizing");
+    textarea.style.height = textarea.scrollHeight + 'px';
+
+    textarea.addEventListener('input', autoResize, false);
+
+    function autoResize() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+    }
+</script>

@@ -1,0 +1,38 @@
+﻿@model TeamFyraSidor.Models.VM.CreateRoleVM
+
+@{
+    ViewData["Title"] = "Create Role";
+}
+
+<h1 class="striped-background">Create a New Role</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="CreateRole" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group box-shadow">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" required/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+           
+
+            <div class="row">
+                <div class="form-group box-shadow col-md-6 mt-md-2">
+                    <input type="submit" value="Create" class="btn btn-primary w-100" />
+                </div>
+
+                <div class="form-group box-shadow col-md-6 mt-md-2">
+                    <a asp-action="ListRoleName" class="btn btn-secondary w-100">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@TempData["msg"]
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

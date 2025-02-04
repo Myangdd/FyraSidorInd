@@ -1,0 +1,36 @@
+﻿@model TeamFyraSidor.Data.SubscriptionType
+
+@{
+    ViewData["Title"] = "Subscription Type";
+}
+
+<h1>Subscription Type</h1>
+
+<div>
+    <h4>Subscription Type</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypeName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="UpdateSubscriptionType" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="GetAllSubscriptionsTypes">Back to List</a>
+</div>

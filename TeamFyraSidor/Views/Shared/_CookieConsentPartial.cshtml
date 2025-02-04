@@ -1,0 +1,23 @@
+﻿<div id="cookieConsent" class="cookie-popup" style="display: none;">
+    <p>
+        This website uses cookies to improve your experience. By using this site, you consent to the use of cookies.
+        <button id="acceptCookies" class="btn btn-primary">Accept</button>
+    </p>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const cookieConsent = document.getElementById("cookieConsent");
+        const acceptButton = document.getElementById("acceptCookies");
+
+        if (!localStorage.getItem("cookieConsentAccepted")) {
+            cookieConsent.style.display = "block";
+        }
+
+        acceptButton.addEventListener("click", function () {
+            localStorage.setItem("cookieConsentAccepted", "true");
+            cookieConsent.style.display = "none";
+        });
+    });
+</script>

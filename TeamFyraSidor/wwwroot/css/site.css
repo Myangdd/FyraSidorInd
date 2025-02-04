@@ -1,0 +1,109 @@
+
+.weather-icon {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+/*.card {
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+}*/
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+
+  justify-content : center; /*shankar*/
+}
+
+/*mei:card hover effect*/
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+} 
+
+/*mei: achor without underline*/
+a {
+    text-decoration: none;
+    color: inherit;
+
+    font-weight:bold; /*shankar*/
+}
+
+/*mei*/
+/*.striped-background {
+    background: repeating-linear-gradient(-45deg, rgb(12, 9, 190) 0%, rgb(143, 145, 242) 15%, transparent 30%, transparent 40%);
+    box-shadow: inset 15px 0px 30px rgba(0, 0, 0, 0.2);
+}*/
+
+
+/*shankar*/
+.btn {
+    margin: 4px;
+}
+
+hr {
+    border: 1px solid red;
+}
+
+.card {
+    border-style : none;
+}
+
+.para {
+    color: rgb(32, 34, 36);
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    text-transform: none;
+    text-decoration: none;
+    letter-spacing: -0.36px;
+}
+
+/*Mei*/
+.cookie-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: #000;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000;
+    text-align: center;
+}
+
+    .cookie-popup button {
+        background: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-left: 10px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+

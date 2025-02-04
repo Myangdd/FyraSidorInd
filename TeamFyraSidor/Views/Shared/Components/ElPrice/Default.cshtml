@@ -1,0 +1,41 @@
+﻿@* @model TeamFyraSidor.Models.ElPrice
+
+
+@if (ViewData["Error"] != null)
+{
+        <div class="alert alert-danger">@ViewData["Error"]</div>
+}
+else
+{ *@
+
+
+<div class="card text-bg-light mb-3">
+        
+        <div class="card-body">
+            <h3 class="card-header text-center">Electricity Price</h3>
+            <p>@DateTime.Now.ToString("yyyy-MM-dd") 24h Swedish Day-Ahead Electricity Prices (öre/kWh)</p>
+        </div>
+
+        <canvas id="elChart" class="card-img-bottom"></canvas>
+
+        <div class="card-footer">
+            Data from https://mgrey.se/
+        </div>
+    </div>
+
+<script>
+
+     window.onpageshow = function () 
+        {
+            ChartElPrice();
+        }
+
+</script>
+
+        
+
+    
+
+        
+@* } *@
+

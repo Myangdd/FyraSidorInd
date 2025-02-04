@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fyra Sidor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TeamFyraSidor.styles.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body>
+    <header>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 d-grid justify-content-center"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><img src="https://fyrasidorstorage.blob.core.windows.net/imagecontainer/FSLogotype.png" alt="Logo" width="300" height="150" /></a></div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-2">
+                <div class="container-fluid">
+                    @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Webpages</a> *@
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between fw-bolder">
+                        <div class="col-lg-3">
+                        </div>
+                        <ul class="d-flex navbar-nav flex-lg-grow-1 justify-content-center align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link nav-under" asp-area="" asp-controller="Article" asp-action="Index">Articles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-under" asp-controller="Admin" asp-action="ListEmployeeRole">Employees</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-under" asp-controller="Admin" asp-action="ListUserRole">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-under" asp-controller="Admin" asp-action="ListRoleName">Roles</a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a class="nav-link nav-under" asp-controller="Article" asp-action="EditorsChoise">Editor's Choice</a>
+
+                            </li>
+                            @* <li class="nav-item">
+                            <a class="nav-link nav-under" asp-controller="User" asp-action="GetAllSubscriptions">Subscribers</a>
+                            </li> *@
+                            @* <li class="nav-item">
+                            <a class="nav-link nav-under" asp-controller="Admin" asp-action="GetAllSubscriptionsTypes">Subcription Types</a>
+                            </li> *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    API History
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="GetInfo">Weather</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="GetElPrice">Electricity Price</a></li>
+                                    <li><a class="dropdown-item" href="#">Stock</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Subscriptions
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="GetAllSubscriptions">Subscribers List</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="GetAllSubscriptionsTypes">Subscription Types</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="ChartDisplay">Subcription Statistics</a></li>
+                                </ul>
+                            </li>
+                            @* <li class="nav-item">
+                            <a class="nav-link nav-under" asp-controller="Admin" asp-action="ChartDisplay">Subcription Statistics</a>
+                            </li> *@
+                        </ul>
+                        <div class="col-lg-3">
+                            <span class="d-flex float-end me-5"><a class="nav-link nav-under" asp-controller="Home" asp-action="Index">Back To HomePage</a></span>
+                        </div>
+                    </div>
+                    @* <div>
+                    <form asp-action="Search" asp-controller="Home" method="get" class="d-flex" role="search">
+                    <input class="form-control me-2" name="searchString" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-dark" type="submit">Search</button>
+                    </form>
+                    </div> *@
+                </div>
+            </nav>
+        </div>
+
+
+
+    </header>
+
+    @await Html.PartialAsync("_CookieConsentPartial")
+
+    <!-- Main Body -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+    <!-- Footer -->
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            @* <div class="text-center">
+                Logo
+            </div> *@
+            <div class="container text-center mt-3">
+                <a href="https://www.facebook.com" target="_blank" class="btn text-white btn-dark mx-2" aria-label="FaceBook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="btn text-white btn-dark mx-2" aria-label="Tiktok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank" class="btn text-white btn-dark mx-2" aria-label="Linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            <div class="container text-center m-2">
+
+                <a class="col text-center footer-element mx-2" href="#" aria-label="Read More about us">
+                    About
+                </a>
+                <a class="col text-center footer-element mx-2" href="#" aria-label="Read More about Authors">
+                    Authors
+                </a>
+                <a class="col text-center footer-element mx-2" href="#" aria-label="Read More about Archive">
+                    Archive
+                </a>
+                <a class="col text-center footer-element mx-2" href="#" aria-label="Read More about Terms and Conditions">
+                    Terms and Conditions
+                </a>
+                <a class="col text-center footer-element mx-2" asp-controller="Home" asp-action="CookiePolicy" aria-label="Read More about Cookies Policies">
+                    Cookies Policy
+                </a>
+
+
+            </div>
+        </div>
+    </footer>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

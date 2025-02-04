@@ -1,0 +1,8 @@
+﻿@model IEnumerable<TeamFyraSidor.Models.ViewModels.ArticleCategoryLikedVM>
+
+
+@foreach (var item in Model.OrderByDescending(a => a.Article.DateStamp).Take(15))
+{
+    
+    <p><a class="mb-2" asp-action="DisplayArticle" asp-controller="Article" asp-route-id="@item.Article.Id">@item.Article.Headline</a></p>
+}

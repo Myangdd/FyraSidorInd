@@ -1,0 +1,73 @@
+﻿@model IEnumerable<TeamFyraSidor.Data.Article>
+
+@{
+    ViewData["Title"] = "Editor's Choise";
+    var list = Model.ToList();
+    MultiSelectList artList = new MultiSelectList(list, "Id", "Headline");
+}
+
+<h1>@ViewData["Title"]</h1>
+<br /><br />
+@if (ViewBag.EditorsChoiseStatus != null)
+{
+    if (ViewBag.EditorsChoiseStatus == "Editor's Choise Updated Successfully")
+    {
+        <div class="alert alert-success alert-dismissible w-75" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            @ViewBag.EditorsChoiseStatus
+        </div>
+    }
+    else 
+    {
+        <div class="alert alert-danger alert-dismissible w-75" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            @ViewBag.EditorsChoiseStatus
+        </div>
+    }
+}
+
+<p>Choose 5 Articles to select as Editor's Choise.</p>
+
+<form id="eclist" asp-action="EditorsChoise" method="post"  >
+    <div class="form-group">
+        <small>Hold <strong>Control</strong> to select multiple articles.</small>
+        <label class="form-label"></label>
+        <select class="form-select form-select-sm shadow-none" id="articles" name="articles" multiple style="height: 200px;width: 900px" autofocus>
+            @foreach (var item in artList)
+            {
+                var id = Convert.ToInt32(item.Value);
+                if (Model.Where(c => c.Id == id).Select(c => c.EditorsChoise).FirstOrDefault() == true)
+                {
+                    <option value="@item.Value" selected>@item.Text</option>
+                }
+                else if (item.Selected)
+                {
+                    <option value="@item.Value" selected>@item.Text</option>
+                }
+                else
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-sm btn-info" />
+        <span >Articles selected: <strong><span id="selectCount">5</span></strong> / 5</span>
+    </div>
+        
+
+</form>
+
+<script>
+    $("select").on('change', function (e) {
+        if (Object.keys($(this).val()).length > 5) {
+            $('option[value="' + $(this).val().toString().split(',')[5] + '"]').prop('selected', false);
+        }
+        var options = document.getElementById("articles").options, count = 0;
+            for (var i=0; i < options.length; i++) {
+                if (options[i].selected) count++;
+            }
+                document.getElementById("selectCount").innerHTML = count;
+    });
+</script>

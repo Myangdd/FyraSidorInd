@@ -1,0 +1,117 @@
+﻿@page "/User/Subscription"
+
+@using System.Linq;
+
+@model ManageSubscriptionModel
+@{
+    ViewData["Title"] = "Manage Subscription";
+    ViewData["ActivePage"] = ManageNavPages.ManageSubscription;
+    string subcriptionId = "";
+    if (Model.Subscriptions != null)
+    {
+        subcriptionId = Model.Subscriptions.Select(c => c.Id).FirstOrDefault()!;
+    }
+
+}
+
+<h2>Subscriptions</h2>
+@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+<div class="col-sm-12">
+    @{
+        if (Model.StripeCustomerId != null)
+        {
+            if (Model.Subscriptions!.Any())
+            {
+                foreach (var subscription in Model.Subscriptions!)
+                {
+                    string amount = subscription.Items.Data.Select(c => c.Price.UnitAmount).FirstOrDefault().ToString()!;
+                    double amountconvert = Convert.ToDouble(amount);
+                    amountconvert = amountconvert / 100;
+                    <div class="alert alert-success">
+                        <strong>Status: @subscription.Status</strong>
+                        <p>
+                            @subscription.Items.Data.Select(c => c.Plan.Nickname).FirstOrDefault() :
+                            @amountconvert @subscription.Items.Data.Select(c => c.Plan.Currency).FirstOrDefault()!.ToUpper()
+                            <br />
+                            Subscription Period: @subscription.StartDate.ToShortDateString() - @subscription.CurrentPeriodEnd.ToShortDateString()
+                        </p>
+                    </div>
+                }
+                if (Model.Subscriptions.Select(c => c.CancelAtPeriodEnd).FirstOrDefault() == true)
+                {
+                    <div class="alert alert-warning">
+                        You have canceled your subscription, and it will end at <strong>@Model.Subscriptions.Select(c => c.CurrentPeriodEnd).FirstOrDefault().ToShortDateString()</strong>.
+                        <br /><br />
+                        You will still have access until above date.
+                        <br />
+                        If you want to resubscribe, you can do so after your current subscription has run out.
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        You currently have an active
+                        <strong>@Model.Subscriptions.Select(p => p.Items.Data.Select(c => c.Price.Nickname).FirstOrDefault()).FirstOrDefault()</strong>
+                        Subscription.
+                        <br /><br />
+                        <button id="cancelSub" data-id="@subcriptionId" type="submit" class="btn btn-warning">
+                            Press here to Cancel your Subscription
+                        </button>
+                    </div>
+                }
+
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <strong>Hey!</strong>
+                It looks like you don't have an active subscription.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post" class="payment-form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="SubscriptionProducts" class="control-label">Choose a Subscription to fit your needs:</label>
+                            <select asp-for="Input.ProductId" class="form-control subscription-products" asp-items="Model.SubscriptionProducts"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SubscriptionPrice" class="control-label">Select Payment Interval</label>
+                            <select asp-for="Input.PriceId" class="form-control subscription-prices"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PriceAmount" class="control-label">Price</label>
+                            <span class="form-control plan-price"></span>
+                        </div>
+                        <br />
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="@Model.StripeKey"
+                                data-email="@Model.UserEmail"
+                                data-name="Fyra Sidor News"
+                                data-description="&copy; Fyra Sidor 2025"
+                                data-image="https://fyrasidorstorage.blob.core.windows.net/imagecontainer/LogoMockup.png"
+                                data-locale="auto">
+                        </script>
+                    </form>
+                </div>
+                <div class="col-md-5">
+                    <div class="alert alert-info">
+                        Make sure you choose the right subscription.<br /> 
+                        If you choose the wrong one you have to wait until your current subscription has run out before you can change to another one.<br />
+                        The Newsletter is <strong>only</strong> available for Full Access Subscribers.
+                    </div>
+                </div>
+            </div>
+            
+        }
+    }
+</div>
+
+@*https://stripe.com/img/documentation/checkout/marketplace.png*@
+@section Scripts {
+
+    <script src="~/js/Subscriptions.js"></script>
+}

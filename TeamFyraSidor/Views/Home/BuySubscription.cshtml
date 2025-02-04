@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TeamFyraSidor.Data
+@inject SignInManager<User> SignInManager
+
+
+<div class="bg-body-secondary rounded-3 mt-5">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p class="text-center fw-bold mt-3">
+            Hi, you are logged in!
+        </p>
+    }
+    else
+    {
+        <div class="text-center mt-3">
+            <span>
+                Already a subscriber?
+            </span>
+            <a asp-area="Identity" asp-page="/Account/Login" style="color:blue">Log in here</a>
+        </div>
+    }
+
+    <h3 class="text-center text-danger pt-3">
+        Buy subscription to unlock our articles at Fyra Sidor!
+    </h3>
+    <p class="text-center fw-bold">
+        Join now and continue reading the news <br />
+        Choose a plan below to get started!
+    </p>
+
+    <div class="p-3">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center bg-info text-white">Sports Monthly</h3>
+                        <ul class="list-group fw-semibold">
+                            <li class="list-group-item">Unlock every sports article</li>
+                            <li class="list-group-item">Renews at 49 Kr per month</li>
+                            <li class="list-group-item">Cancel anytime</li>
+                        </ul>
+                        <div class="d-flex justify-content-center m-3">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Manage/ManageSubscription">Pay 49Kr</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login">Pay 49Kr</a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h3 class="card-title text-center bg-info text-white">News Monthly</h3>
+                        <ul class="list-group fw-semibold">
+                            <li class="list-group-item">Unlock every news article except sports</li>
+                            <li class="list-group-item">Renews at 99 Kr per month</li>
+                            <li class="list-group-item">Cancel anytime</li>
+                        </ul>
+                        <div class="d-flex justify-content-center m-3">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Manage/ManageSubscription">Pay 99Kr</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login">Pay 99Kr</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+
+                    <div class="card-body ">
+                        <h3 class="card-title text-center bg-info text-white">News Plus Monthly</h3>
+                        <ul class="list-group fw-semibold">
+                            <li class="list-group-item">Unlock every news article</li>
+                            <li class="list-group-item">Renews at 139 Kr per month</li>
+                            <li class="list-group-item">Cancel anytime</li>
+                        </ul>
+                        <div class="d-flex justify-content-center m-3">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Manage/ManageSubscription">Pay 139Kr</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login">Pay 139Kr</a>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

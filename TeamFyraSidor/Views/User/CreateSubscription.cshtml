@@ -1,0 +1,49 @@
+﻿@model TeamFyraSidor.Models.CreateSubscriptionViewModel
+
+@{
+    ViewData["Title"] = "CreateSubscription";
+}
+
+<h1>CreateSubscription</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateSubscription">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label for="SubscriptionTypeId">Subscription Type</label>
+            <select name="SubscriptionTypeId" id="SubscriptionTypeId" class="form-control">
+                <option value="">-- Select a Subscription Type --</option>
+                @foreach (var type in Model.SubscriptionTypeList)
+                {
+                    <option value="@type.Id">@type.TypeName</option>
+                }
+            </select>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" disabled />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expires" class="control-label"></label>
+                <input asp-for="Expires" class="form-control" disabled />
+                <span asp-validation-for="Expires" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check m-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="PaymentComplete" /> @Html.DisplayNameFor(model => model.PaymentComplete)
+                </label>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-success" />
+                <a asp-controller="User" asp-action="GetAllSubscriptions" class="btn btn-primary">Back to list</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

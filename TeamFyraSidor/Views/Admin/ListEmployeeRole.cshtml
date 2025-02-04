@@ -1,0 +1,67 @@
+﻿@model IEnumerable<TeamFyraSidor.Models.VM.EditUserAndRoleVM>
+
+@{
+    ViewData["Title"] = "List Empolyee and Role";
+    
+}
+<div class="m-3">
+    <h1>List of Employees</h1>
+    <hr />
+    <a class="btn btn-success" asp-action="RegisterUserRole">Register a New employee</a>
+    <br />
+</div>
+
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12">
+            <table class="table mb-5">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">
+                            Name
+                        </th>
+                        <th class="col-md-3">
+                            Email
+                        </th>
+                        <th class="col-md-3">
+                            Role
+                        </th>
+                        <th class="col-md-3">
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.FirstName @item.LastName
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            @{
+                                var listRoleName = string.Join(",", item.ListRoleName);
+                            }
+                            <td>
+                                @listRoleName
+                            </td>
+                            <td>
+                                <a asp-action="DetailUserRole" asp-route-email="@item.Email" class="btn btn-info">Detail</a>
+                                <a asp-action="EditUserInfo" asp-route-id="@item.UserId" class="btn btn-primary">Edit Info</a>
+                                <a asp-action="EditUserRole" asp-route-id="@item.UserId" class="btn btn-primary">Edit Role</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

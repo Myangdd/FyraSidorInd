@@ -1,0 +1,64 @@
+﻿@page "/User/Newsletter"
+@model ManageNewsletterModel
+@inject UserManager<User> UserManager;
+
+@{
+    ViewData["Title"] = "Manage Newsletter";
+    ViewData["ActivePage"] = ManageNavPages.ManageNewsletter;
+    var user = await UserManager.GetUserAsync(User);
+    
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<br />
+@{
+    if (Model.SubscriptionTypeId == 3)
+    {
+        if (Model.Input.Newsletter == false)
+        {
+            <br />
+            <div class="row">
+                <div class="col-lg-8">
+                    <form id="newsletter-form" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="d-flex mb-3">
+                            <input asp-for="Input.Newsletter" class="form-control-sm" type="checkbox" />
+                            <label asp-for="Input.Newsletter" class="form-control-sm">Yes, I want to recieve the weekly newsletter with new popular articles every week!</label>
+                            <span asp-validation-for="Input.Newsletter" class="text-danger"></span>
+                        </div>
+                        <button id="update-newsletter-button" type="submit" class="btn btn-lg btn-primary">Subscribe to Newsletter</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-lg-8">
+                    <form id="newsletter-form" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="d-flex mb-3">
+                            <input asp-for="Input.Newsletter" class="form-control-sm" type="checkbox" checked />
+                            <label asp-for="Input.Newsletter" class="form-control-sm">Uncheck this box and press Unsubscribe for unsubscribing to the Newsletter!</label>
+                            <span asp-validation-for="Input.Newsletter" class="text-danger"></span>
+                        </div>
+                        <button id="update-newsletter-button" type="submit" class="btn btn-lg btn-primary">Unsubscribe to Newsletter</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            You need to be a <stong>Full Access Subscriber</stong> to access the Newsletter Function.<br />
+            If you don't have a subscription, press <strong><a asp-page="ManageSubscription">here</a></strong> to subscribe.
+        </div>
+    }
+}
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
